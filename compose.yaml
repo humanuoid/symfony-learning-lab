@@ -19,7 +19,30 @@ services:
       # - ./docker/db/data:/var/lib/postgresql/data:rw
 ###< doctrine/doctrine-bundle ###
 
+###> frankenphp ###
+  app:
+    build:
+      context: .
+      dockerfile: .docker/frankenphp/Dockerfile
+    volumes:
+      - ./:/app
+      - caddy_data:/data
+      - caddy_config:/config
+    environment:
+      - DATABASE_URL=postgresql://app:!ChangeMe!@database:5432/app?serverVersion=16&charset=utf8
+      - APP_ENV=dev
+      - APP_DEBUG=1
+    depends_on:
+      database:
+        condition: service_healthy
+    tty: true
+###< frankenphp ###
+
 volumes:
 ###> doctrine/doctrine-bundle ###
   database_data:
 ###< doctrine/doctrine-bundle ###
+  ###> frankenphp ###
+  caddy_data:
+  caddy_config:
+  ###< frankenphp ###
