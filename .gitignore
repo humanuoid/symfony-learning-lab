@@ -1,3 +1,5 @@
+aidd_docs/tasks/
+
 ###> symfony/framework-bundle ###
 /.env.local
 /.env.local.php

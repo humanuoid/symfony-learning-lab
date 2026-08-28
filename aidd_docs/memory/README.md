@@ -19,9 +19,11 @@ Refreshed automatically by the memory hook. Do not edit by hand.
 <!-- files:start -->
 - [architecture.md](architecture.md)
 - [auth.md](auth.md)
+- [code-comments.md](code-comments.md)
 - [codebase-map.md](codebase-map.md)
 - [coding-assertions.md](coding-assertions.md)
 - [database.md](database.md)
+- [ddd.md](ddd.md)
 - [deployment.md](deployment.md)
 - [design.md](design.md)
 - [ecosystem.md](ecosystem.md)
