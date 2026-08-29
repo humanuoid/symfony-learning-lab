@@ -1,21 +1,17 @@
 # Navigation
 
-The project's routing and navigation structure.
+How the user moves through the app: routing and the page structure.
 
-## Routes
+## Routing
 
-- Route configuration in config/routes.yaml
-- Annotated routes via #[Route] attribute (Symfony 7.4)
-- Route collection in config/routes/ (imported)
+- Symfony routing via config/routes.yaml
+- No custom routes yet (starter project)
 
-## Current state
+## Structure
 
-- No controllers defined (empty src/Controller/)
-- No routes configured yet
-- Routes will be defined via attributes or YAML
+The macro page map, main sections only.
 
-## URL structure
-
-- Base URL: /
-- API routes: /api/ (convention, not yet implemented)
-- Admin routes: /admin/ (convention, not yet implemented)
+```mermaid
+flowchart LR
+    Home[Homepage]
+```

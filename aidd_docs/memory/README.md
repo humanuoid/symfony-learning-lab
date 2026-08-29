@@ -10,29 +10,13 @@ flowchart LR
     notes["internal/ · external/"] -.->|on demand| ai
 ```
 
-The root files load every session through the `<aidd_project_memory>` block in each AI context file. `internal/` and `external/` load only when relevant.
+The root files load every session through the project memory block in each AI context file. `internal/` and `external/` load only when relevant.
 
 ## Files
 
 Refreshed automatically by the memory hook. Do not edit by hand.
 
 <!-- files:start -->
-- [architecture.md](architecture.md)
-- [auth.md](auth.md)
-- [code-comments.md](code-comments.md)
-- [codebase-map.md](codebase-map.md)
-- [coding-assertions.md](coding-assertions.md)
-- [database.md](database.md)
-- [ddd.md](ddd.md)
-- [deployment.md](deployment.md)
-- [design.md](design.md)
-- [ecosystem.md](ecosystem.md)
-- [forms.md](forms.md)
-- [messaging.md](messaging.md)
-- [navigation.md](navigation.md)
-- [project-brief.md](project-brief.md)
-- [testing.md](testing.md)
-- [vcs.md](vcs.md)
 <!-- files:end -->
 
 ## Maintaining it

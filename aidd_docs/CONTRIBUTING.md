@@ -9,6 +9,7 @@ Add or edit a file under `aidd_docs/memory/`. See [`memory/README.md`](memory/RE
 ## Adding AI content (skills, rules, agents, commands, hooks)
 
 - Use the generator skills (`aidd-context:04-skill-generate` through `08-hook-generate`, and `10-learn` for memory or rules). They scaffold the right shape and write to the right place for each tool you use.
+- Project-specific skills that can generate code must be placed in `.agents/skills/` directory following [OpenCode nomenclature](https://opencode.ai/docs/skills/).
 - Open a pull request for anything that changes how the AI behaves on this project. The team reviews it like any code change.
 
 ## Adding recipes

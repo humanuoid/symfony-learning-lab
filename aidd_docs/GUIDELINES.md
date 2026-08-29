@@ -5,7 +5,6 @@ How this team drives AI coding assistants on this project. Keep it short and spe
 ## House rules
 
 - A failing test comes before any bug fix
-- Never edit the generated client under src/api/
 - Commits stay atomic and intention-revealing
 
 ## Validation depth

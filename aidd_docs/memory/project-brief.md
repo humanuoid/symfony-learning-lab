@@ -4,14 +4,12 @@ What this project is, the problem it solves, and its domain language. The non-de
 
 ## What it is
 
-- A Symfony 7.4 learning lab and starter project
-- Demonstrates Symfony best practices with Doctrine, Twig, and modern PHP
+- A Symfony 7.4 starter project with Docker-based development environment
+- Pre-configured with common bundles and testing tools
 
 ## Why it exists
 
-- Learning and experimentation with Symfony framework
-- Foundation for building Symfony applications
-- Testing ground for Doctrine ORM, Messenger, and other Symfony components
+- To provide a ready-to-use Symfony development setup for learning and prototyping
 
 ## Domain language
 
@@ -19,22 +17,16 @@ The terms a contributor must know to read the code.
 
 | Term | Meaning |
 | ---- | ------- |
-| Entity | Doctrine ORM entity class |
-| Repository | Doctrine repository pattern for database access |
-| Controller | Symfony HTTP controller |
-| Service | Symfony dependency injection service |
-| Bundle | Symfony bundle (module) |
-| Messenger | Symfony message bus for async processing |
+| Symfony | PHP web framework |
+| Bundle | Symfony plugin/extension |
+| Twig | Templating engine |
+| Doctrine | ORM for database interactions |
+| FrankenPHP | PHP application server with Docker |
 
 ## Key features
 
-- Symfony 7.4 framework with Flex
-- Doctrine ORM with migrations
-- Twig templating
-- Symfony Messenger with Doctrine transport
-- Security bundle for authentication
-- Docker Compose for local PostgreSQL and Mailpit
-- PHPStan for static analysis
-- Pest for testing
-- Rector for automated refactoring
-- PHP CodeSniffer for code style
+- Symfony 7.4 full-stack framework
+- Docker development environment with FrankenPHP
+- Testing with Pest
+- Static analysis with PHPStan
+- Code quality with PHP_CodeSniffer
