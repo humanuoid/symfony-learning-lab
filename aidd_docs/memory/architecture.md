@@ -34,3 +34,33 @@ flowchart LR
 ## Gotchas
 
 - Docker configuration in `.docker/frankenphp/` for local development
+
+## Domain-Driven Design (DDD) & Clean Architecture
+
+### Structure
+Code organized by **bounded contexts** (business capabilities) with strict layer separation. See `src/` for implementation.
+
+```
+src/
+├── {BoundedContext}/          # e.g. User/, Billing/
+│   ├── Domain/               # Business rules (entities, value objects, repository interfaces)
+│   ├── Application/          # Use cases (commands, queries, handlers)
+│   └── Infrastructure/       # Technical details (Doctrine, API clients, controllers)
+└── Shared/                   # Cross-cutting concerns (Kernel, Bus, exceptions)
+```
+
+### Layers
+| Layer | Responsibility | Can depend on | Cannot depend on |
+|-------|----------------|---------------|-------------------|
+| Domain | Business rules | Shared/Domain | Symfony, Doctrine, Infrastructure |
+| Application | Use case coordination | Domain, Shared/Application | Infrastructure |
+| Infrastructure | Technical implementation | All | - |
+
+### Key Decisions
+- **Bounded Contexts**: Group code by business capability (User, Billing), not by technical type (Controller, Entity)
+- **Doctrine Mappings**: External YAML files in `config/doctrine/` to decouple Domain from ORM
+- **CQRS**: Available but optional; use only when read/write have different requirements (e.g. projections, caching)
+- **Event-Driven**: 
+  - Synchronous events via `EventDispatcher` (immediate, atomic)
+  - Asynchronous via Messenger (long-running, retryable)
+- **Architecture Enforcement**: Pest Arch Testing (see `tests/Architecture/`)
