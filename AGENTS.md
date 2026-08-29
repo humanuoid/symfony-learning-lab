@@ -48,6 +48,7 @@ aidd_docs/memory/forms.md
 aidd_docs/memory/navigation.md
 aidd_docs/memory/project-brief.md
 aidd_docs/memory/testing.md
+aidd_docs/memory/tooling.md
 aidd_docs/memory/vcs.md
 <!-- aidd_project_memory:end -->
 
