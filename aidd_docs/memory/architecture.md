@@ -15,13 +15,12 @@ The macro flow between the main parts. One box per area, high level only.
 
 ```mermaid
 flowchart LR
-    Request[HTTP Request] --> FrankenPHP
-    FrankenPHP --> Symfony[Symfony Kernel]
-    Symfony --> Controller[Controllers]
-    Controller --> Service[Services]
-    Service --> Repository[Doctrine Repositories]
-    Repository --> Database[(Database)]
-    Controller --> Twig[Twig Templates]
+    Request[HTTP Request] --> Presentation[Presentation]
+    Presentation --> Application[Application]
+    Application --> Domain[Domain]
+    Infrastructure[Infrastructure] --> Domain
+    Infrastructure --> Database[(Database)]
+    Presentation --> Twig[Twig Templates]
     Twig --> Response[HTTP Response]
 ```
 
@@ -46,16 +45,20 @@ src/
 │   ├── Domain/               # Business rules (entities, value objects, repository interfaces)
 │   ├── Application/          # Use cases (organized by feature in UseCase/)
 │   │   └── UseCase/         # Feature-based use cases (e.g. RegisterUser/, LoginUser/)
-│   └── Infrastructure/       # Technical details (Doctrine, API clients, controllers)
+│   ├── Infrastructure/       # Technical details (Doctrine, API clients)
+│   └── Presentation/         # HTTP/CLI entry points (controllers, templates)
 └── Shared/                   # Cross-cutting concerns (Kernel, Bus, exceptions)
 ```
 
 ### Layers
 | Layer | Responsibility | Can depend on | Cannot depend on |
 |-------|----------------|---------------|-------------------|
-| Domain | Business rules | Shared/Domain | Symfony, Doctrine, Infrastructure |
-| Application | Use case coordination | Domain, Shared/Application | Infrastructure |
-| Infrastructure | Technical implementation | All | - |
+| Domain | Business rules (pure PHP) | Self, Shared/Domain | Application, Infrastructure, Presentation, Symfony, Doctrine |
+| Application | Use case coordination | Domain, Shared/Application | Infrastructure, Presentation |
+| Infrastructure | Technical implementation | Domain, Application, Shared | - |
+| Presentation | HTTP/CLI entry points | Domain, Application, Infrastructure, Symfony, Doctrine | - |
+
+> **Domain layer contains only pure PHP objects** (entities, value objects, repository interfaces) with zero framework dependencies.
 
 ### Key Decisions
 - **Bounded Contexts**: Group code by business capability (User, Billing), not by technical type (Controller, Entity)

@@ -38,7 +38,7 @@ The practical patterns, methodology, and examples for implementing features foll
 3. **Define user action** → `Application/UseCase/{FeatureName}/{FeatureName}Command` or `{FeatureName}Query`
 4. **Define coordination** → `Application/UseCase/{FeatureName}/{FeatureName}Handler`
 5. **Define persistence** → `Infrastructure/Persistence/{ORM}/{Entity}Repository`
-6. **Define exposure** → `Infrastructure/Controller/{FeatureName}Controller` (HTTP) or `Infrastructure/Console/` (CLI)
+6. **Define exposure** → `Presentation/Web/{FeatureName}Controller` (HTTP) or `Presentation/Console/` (CLI)
 7. **Define side effects** → `Domain/Event` (sync) or `Application/Notification` (async)
 8. **Write tests** → Unit tests for Domain, integration tests for Application
 
@@ -65,13 +65,15 @@ src/User/
 │           └── Exception/
 │               └── EmailAlreadyUsedException.php
 │
-└── Infrastructure/
-    ├── Persistence/
-    │   ├── Doctrine/
-    │   │   ├── User.orm.yaml         # YAML mapping (UNIQUE location)
-    │   │   └── DoctrineUserRepository.php
-    │   └── InMemoryUserRepository.php # For tests
-    └── Controller/
+├── Infrastructure/
+│   └── Persistence/
+│       ├── Doctrine/
+│       │   ├── User.orm.yaml         # YAML mapping (UNIQUE location)
+│       │   └── DoctrineUserRepository.php
+│       └── InMemoryUserRepository.php # For tests
+│
+└── Presentation/
+    └── Web/
         └── RegisterUserController.php # HTTP endpoint
 ```
 
@@ -125,8 +127,8 @@ src/User/
 | Command | `{UseCase}Command` | `RegisterUserCommand.php` | `Application/UseCase/{UseCase}/` |
 | Handler | `{UseCase}Handler` | `RegisterUserHandler.php` | `Application/UseCase/{UseCase}/` |
 | Exception | `{UseCase}{Error}Exception` | `RegisterUserEmailAlreadyUsedException.php` | `Application/UseCase/{UseCase}/Exception/` |
-| Controller | `{UseCase}Controller` | `RegisterUserController.php` | `Infrastructure/Controller/` |
-| Template | `{context}/{use_case}.html.twig` | `user/register_user.html.twig` | `templates/` |
+| Controller | `{UseCase}Controller` | `RegisterUserController.php` | `Presentation/Web/` |
+| Template | `{context}/{use_case}.html.twig` | `user/register_user.html.twig` | `src/{BoundedContext}/Presentation/Web/templates/` |
 | Route | `/{context}/{action}` (kebab-case) | `/user/register` | `config/routes.yaml` |
 
 ### Doctrine Mapping Rules

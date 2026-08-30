@@ -19,3 +19,7 @@ arch('domain - no application dependency')
 arch('domain - no infrastructure dependency')
     ->expect('App\Infrastructure')
     ->not->toBeUsedIn('App\Domain');
+
+arch('domain - no presentation dependency')
+    ->expect('App\Presentation')
+    ->not->toBeUsedIn('App\Domain');
