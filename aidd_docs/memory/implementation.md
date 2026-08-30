@@ -35,10 +35,10 @@ The practical patterns, methodology, and examples for implementing features foll
 ### Steps to Implement a Feature in a Bounded Context
 1. **Identify the bounded context** (e.g. `User/`)
 2. **Define business rules** → `Domain/Entity` or `Domain/Service`
-3. **Define user action** → `Application/Command` or `Application/Query`
-4. **Define coordination** → `Application/CommandHandler` or `Application/QueryHandler`
+3. **Define user action** → `Application/UseCase/{FeatureName}/{FeatureName}Command` or `{FeatureName}Query`
+4. **Define coordination** → `Application/UseCase/{FeatureName}/{FeatureName}Handler`
 5. **Define persistence** → `Infrastructure/Persistence/{ORM}/{Entity}Repository`
-6. **Define exposure** → `Infrastructure/Controller/` (HTTP) or `Infrastructure/Console/` (CLI)
+6. **Define exposure** → `Infrastructure/Controller/{FeatureName}Controller` (HTTP) or `Infrastructure/Console/` (CLI)
 7. **Define side effects** → `Domain/Event` (sync) or `Application/Notification` (async)
 8. **Write tests** → Unit tests for Domain, integration tests for Application
 
@@ -58,15 +58,17 @@ src/User/
 │       └── UserRegisteredEvent.php   # Domain event
 │
 ├── Application/
-│   ├── Command/
-│   │   └── RegisterUser.php          # DTO
-│   └── CommandHandler/
-│       └── RegisterUserHandler.php   # Coordinates use case
+│   └── UseCase/
+│       └── RegisterUser/            # Feature-based organization
+│           ├── RegisterUserCommand.php    # DTO
+│           ├── RegisterUserHandler.php    # Coordinates use case
+│           └── Exception/
+│               └── EmailAlreadyUsedException.php
 │
 └── Infrastructure/
     ├── Persistence/
     │   ├── Doctrine/
-    │   │   ├── User.orm.yaml         # YAML mapping (see config/doctrine/)
+    │   │   ├── User.orm.yaml         # YAML mapping (UNIQUE location)
     │   │   └── DoctrineUserRepository.php
     │   └── InMemoryUserRepository.php # For tests
     └── Controller/
@@ -105,6 +107,8 @@ src/User/
 | Event (async) | Long-running tasks | Email, webhook, PDF generation | Atomic operations |
 
 ## Nomenclature Rules
+
+### General Patterns
 | Type | Prefix/Suffix | Example |
 |------|---------------|---------|
 | Command | `{Action}Command` | `RegisterUserCommand` |
@@ -114,11 +118,27 @@ src/User/
 | Repository (interface) | `{Entity}Repository` | `UserRepository` |
 | Repository (implementation) | `Doctrine{Entity}Repository` | `DoctrineUserRepository` |
 
+### UseCase Organization Rules
+| Element | Convention | Example | Location |
+|---------|------------|---------|----------|
+| UseCase folder | `{Verbe}{Objet}` (PascalCase) | `RegisterUser/` | `Application/UseCase/` |
+| Command | `{UseCase}Command` | `RegisterUserCommand.php` | `Application/UseCase/{UseCase}/` |
+| Handler | `{UseCase}Handler` | `RegisterUserHandler.php` | `Application/UseCase/{UseCase}/` |
+| Exception | `{UseCase}{Error}Exception` | `RegisterUserEmailAlreadyUsedException.php` | `Application/UseCase/{UseCase}/Exception/` |
+| Controller | `{UseCase}Controller` | `RegisterUserController.php` | `Infrastructure/Controller/` |
+| Template | `{context}/{use_case}.html.twig` | `user/register_user.html.twig` | `templates/` |
+| Route | `/{context}/{action}` (kebab-case) | `/user/register` | `config/routes.yaml` |
+
+### Doctrine Mapping Rules
+- **UNIQUE location**: `src/{BoundedContext}/Infrastructure/Persistence/Doctrine/{Entity}.orm.yaml`
+- **Never** in `config/doctrine/` (reserved for Symfony bundle configuration only)
+- **Naming**: `{Entity}.orm.yaml` (e.g., `User.orm.yaml`)
+
 ## Doctrine Configuration
-External YAML mappings to decouple Domain from ORM. See `config/doctrine/{BoundedContext}/` for examples:
+External YAML mappings to decouple Domain from ORM. **MUST** be located in `src/{BoundedContext}/Infrastructure/Persistence/Doctrine/{Entity}.orm.yaml` (UNIQUE correct location).
 
 ```yaml
-# config/doctrine/User/Entity.User.orm.yaml
+# src/User/Infrastructure/Persistence/Doctrine/User.orm.yaml
 App\User\Domain\Model\Entity\User:
   type: entity
   repositoryClass: App\User\Infrastructure\Persistence\Doctrine\DoctrineUserRepository

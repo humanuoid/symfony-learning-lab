@@ -44,7 +44,8 @@ Code organized by **bounded contexts** (business capabilities) with strict layer
 src/
 ├── {BoundedContext}/          # e.g. User/, Billing/
 │   ├── Domain/               # Business rules (entities, value objects, repository interfaces)
-│   ├── Application/          # Use cases (commands, queries, handlers)
+│   ├── Application/          # Use cases (organized by feature in UseCase/)
+│   │   └── UseCase/         # Feature-based use cases (e.g. RegisterUser/, LoginUser/)
 │   └── Infrastructure/       # Technical details (Doctrine, API clients, controllers)
 └── Shared/                   # Cross-cutting concerns (Kernel, Bus, exceptions)
 ```
@@ -58,7 +59,8 @@ src/
 
 ### Key Decisions
 - **Bounded Contexts**: Group code by business capability (User, Billing), not by technical type (Controller, Entity)
-- **Doctrine Mappings**: External YAML files in `config/doctrine/` to decouple Domain from ORM
+- **Doctrine Mappings**: External YAML files in `src/{BoundedContext}/Infrastructure/Persistence/Doctrine/` to decouple Domain from ORM (UNIQUE correct location)
+- **UseCase Organization**: Features are grouped under `Application/UseCase/{FeatureName}/` with strict DDD layer separation
 - **CQRS**: Available but optional; use only when read/write have different requirements (e.g. projections, caching)
 - **Event-Driven**: 
   - Synchronous events via `EventDispatcher` (immediate, atomic)
