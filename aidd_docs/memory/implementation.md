@@ -81,9 +81,9 @@ src/User/
 - **Business Rule**: "User cannot delete account with active subscriptions"
   → `User::canBeDeleted()` in `Domain/Entity/User.php`
 - **Action**: User clicks "Delete Account"
-  → `DeleteUserCommand` in `Application/Command/`
+  → `DeleteUserCommand` in `Application/UseCase/DeleteUser/`
 - **Coordination**: Check subscriptions, delete user, notify admins
-  → `DeleteUserHandler` in `Application/CommandHandler/`
+  → `DeleteUserHandler` in `Application/UseCase/DeleteUser/`
 - **Side Effects**: Send admin notification
   → `UserDeletedEvent` (sync) + `NotifyAdminsNotification` (async)
 
@@ -91,9 +91,9 @@ src/User/
 - **Business Rule**: "User locked after 5 failed attempts"
   → `User::incrementFailedAttempts()` + `User::isLocked()` in `Domain/Entity/User.php`
 - **Action**: User submits credentials
-  → `AuthenticateUserCommand` in `Application/Command/`
+  → `AuthenticateUserCommand` in `Application/UseCase/AuthenticateUser/`
 - **Coordination**: Verify password, update attempts
-  → `AuthenticateUserHandler` in `Application/CommandHandler/`
+  → `AuthenticateUserHandler` in `Application/UseCase/AuthenticateUser/`
 - **Side Effects**: 
   - `UserAuthenticatedEvent` (sync, for session)
   - `FailedLoginAttemptEvent` (sync, for counter)

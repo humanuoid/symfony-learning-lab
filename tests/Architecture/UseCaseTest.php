@@ -15,3 +15,12 @@ arch('use case - handlers suffix')
 arch('application - not depends on infrastructure')
     ->expect('App\Application')
     ->not->toUse('App\Infrastructure');
+
+// Application must not use Symfony or Doctrine - framework-agnostic
+arch('application - no symfony')
+    ->expect('App\Application')
+    ->not->toUse('Symfony\*');
+
+arch('application - no doctrine')
+    ->expect('App\Application')
+    ->not->toUse('Doctrine\*');

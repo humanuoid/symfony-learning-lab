@@ -18,8 +18,10 @@ flowchart LR
     Request[HTTP Request] --> Presentation[Presentation]
     Presentation --> Application[Application]
     Application --> Domain[Domain]
-    Infrastructure[Infrastructure] --> Domain
+    Domain -->|interfaces| Infrastructure[Infrastructure]
     Infrastructure --> Database[(Database)]
+    Infrastructure -.->|implements| Domain
+    Presentation --> Infrastructure
     Presentation --> Twig[Twig Templates]
     Twig --> Response[HTTP Response]
 ```
@@ -54,9 +56,12 @@ src/
 | Layer | Responsibility | Can depend on | Cannot depend on |
 |-------|----------------|---------------|-------------------|
 | Domain | Business rules (pure PHP) | Self, Shared/Domain | Application, Infrastructure, Presentation, Symfony, Doctrine |
-| Application | Use case coordination | Domain, Shared/Application | Infrastructure, Presentation |
+| Application | Use case coordination | Domain, Shared/Application | Infrastructure, Presentation, Symfony, Doctrine |
 | Infrastructure | Technical implementation | Domain, Application, Shared | - |
 | Presentation | HTTP/CLI entry points | Domain, Application, Infrastructure, Symfony, Doctrine | - |
+
+> **Application layer must not use Symfony or Doctrine** - it orchestrates use cases using Domain objects only, remaining framework-agnostic.
+> **Presentation layer must not contain business logic** - it handles I/O only, delegating all business decisions to Domain via Application.
 
 > **Domain layer contains only pure PHP objects** (entities, value objects, repository interfaces) with zero framework dependencies.
 
