@@ -5,6 +5,7 @@ How the project is tested: the layers, the tools, and the conventions. Where tes
 ## Strategy
 
 - Unit and integration tests with Pest
+- Architecture tests with Pest Arch Testing
 
 ## Tools
 
@@ -14,10 +15,12 @@ How the project is tested: the layers, the tools, and the conventions. Where tes
 
 - Tests live in `tests/` directory
 - Test files follow Pest conventions
+- Architecture tests in `tests/Architecture/`
 
 ## Run
 
 - Run all tests: `pest` or `./vendor/bin/pest`
+- Run architecture tests only: `pest --filter Architecture`
 
 ## Browser QA
 

@@ -32,41 +32,8 @@ If a fix is needed, spawn 1 agent per assertion to fix (e.g typechecking / tests
 
 ## Architecture Tests
 
-Enforce DDD layer separation and UseCase organization using Pest Arch Testing (see `tests/Architecture/DomainTest.php`):
+DDD layer separation and UseCase organization rules are enforced via Pest Arch Testing in `tests/Architecture/`:
 
-```php
-// Layer separation
-test('Domain ne dépend pas de Symfony ou Doctrine')
-    ->expect('App\**\Domain\*')
-    ->not->toDependOnAny(['Symfony\*', 'Doctrine\*']);
-
-test('Application ne dépend pas de Infrastructure')
-    ->expect('App\**\Application\*')
-    ->not->toDependOn('App\**\Infrastructure\*');
-
-test('Infrastructure peut dépendre de Domain et Application')
-    ->expect('App\**\Infrastructure\*')
-    ->toDependOnAny(['App\**\Domain\*', 'App\**\Application\*']);
-
-// UseCase organization
-test('Les UseCases sont dans Application/UseCase/')
-    ->expect('App\**\Application\UseCase\*')
-    ->toBeDirectories();
-
-test('Les Commandes sont dans leur UseCase')
-    ->expect('App\**\Application\UseCase\*\*Command')
-    ->toBeClasses();
-
-test('Les Handlers sont dans leur UseCase')
-    ->expect('App\**\Application\UseCase\*\*Handler')
-    ->toBeClasses();
-
-// Doctrine mappings location
-test('Les mappings Doctrine sont dans Infrastructure/Persistence/Doctrine/')
-    ->expect('App\**\Infrastructure\Persistence\Doctrine\*.orm.yaml')
-    ->toExist();
-
-test('Aucun mapping Doctrine dans config/')
-    ->expect('config\/doctrine\/\*.orm.yaml')
-    ->not->toExist();
-```
+- **DomainTest.php**: Layer separation rules (Domain, Application, Infrastructure)
+- **UseCaseTest.php**: UseCase organization rules
+- **DoctrineTest.php**: Doctrine mappings location rules
