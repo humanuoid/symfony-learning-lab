@@ -69,3 +69,6 @@ src/
   - Synchronous events via `EventDispatcher` (immediate, atomic)
   - Asynchronous via Messenger (long-running, retryable)
 - **Architecture Enforcement**: Pest Arch Testing (see `tests/Architecture/`)
+
+## References
+- Clean Architecture & DDD implementation inspired by [Bernard Ngandu](https://github.com/bernard-ng)'s [article](https://ngandu.dev/fr/blog/symfony-clean-architecture-ddd#tester-les-frontires-pas-seulement-les-classes)
