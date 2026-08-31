@@ -9,8 +9,6 @@ RUN install-php-extensions \
     zip \
     xdebug
 
-ENV FRANKENPHP_CONFIG="worker /app/public/index.php"
-
 ARG USER=appuser
 RUN adduser -D $USER && \
     setcap CAP_NET_BIND_SERVICE=+eip /usr/local/bin/frankenphp && \
