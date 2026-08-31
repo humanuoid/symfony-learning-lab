@@ -42,6 +42,7 @@ aidd_docs/memory/architecture.md
 aidd_docs/memory/cli.md
 aidd_docs/memory/codebase-map.md
 aidd_docs/memory/coding-assertions.md
+aidd_docs/memory/coding-principles.md
 aidd_docs/memory/design.md
 aidd_docs/memory/ecosystem.md
 aidd_docs/memory/forms.md

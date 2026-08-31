@@ -15,9 +15,9 @@ The fast gate.
 
 The heavier gate.
 
-| Order | Command     | Checks              |
-| ----- | ----------- | ------------------- |
-| 1     | pest        | tests               |
+| Order | Command               | Checks              |
+| ----- | --------------------- | ------------------- |
+| 1     | pest                  | tests               |
 
 ## Behavior
 
@@ -32,8 +32,13 @@ If a fix is needed, spawn 1 agent per assertion to fix (e.g typechecking / tests
 
 ## Architecture Tests
 
-DDD layer separation and UseCase organization rules are enforced via Pest Arch Testing in `tests/Architecture/`:
+Architecture principles are enforced via Pest Arch Testing in `tests/Architecture/`:
 
-- **DomainTest.php**: Layer separation rules (Domain, Application, Infrastructure)
-- **UseCaseTest.php**: UseCase organization rules
-- **DoctrineTest.php**: Doctrine mappings location rules
+- **DomainDrivenDesignTest.php**: Domain-Driven Design layer separation rules (Domain, Application, Infrastructure, Presentation)
+- **SolidTest.php**: SOLID principles enforcement (SRP, OCP, LSP, ISP, DIP)
+- **DryTest.php**: DRY (Don't Repeat Yourself) principle enforcement
+- **KissTest.php**: KISS (Keep It Simple, Stupid) principle enforcement
+
+## Coding Principles
+
+See [coding-principles.md](coding-principles.md) for SOLID, KISS, DRY, and code commenting rules that must be followed in all production code.
