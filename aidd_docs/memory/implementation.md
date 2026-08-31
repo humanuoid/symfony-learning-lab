@@ -30,6 +30,17 @@ The practical patterns, methodology, and examples for implementing features foll
 - **Location**: `Domain/Model/ValueObject/`
 - **Rule**: Always validate in constructor
 
+### Single Action Controller (SAC) Pattern
+- **Purpose**: One controller = one HTTP action = one route
+- **Structure**: Single `__invoke()` method, no other public methods
+- **Responsibility**: Receive request, delegate to Application layer, return response
+- **Constraint**: Routes MUST use PHP attributes (`#[Route]` on the CLASS), never on methods or YAML files
+
+**Implementation**:
+- Controllers live in `src/{BoundedContext}/Presentation/Web/`
+- Must delegate to `{UseCase}Handler` from Application layer
+- Must NOT contain business logic (Domain layer only)
+
 ## Implementation Methodology
 
 ### Steps to Implement a Feature in a Bounded Context
@@ -129,7 +140,12 @@ src/User/
 | Exception | `{UseCase}{Error}Exception` | `RegisterUserEmailAlreadyUsedException.php` | `Application/UseCase/{UseCase}/Exception/` |
 | Controller | `{UseCase}Controller` | `RegisterUserController.php` | `Presentation/Web/` |
 | Template | `{context}/{use_case}.html.twig` | `user/register_user.html.twig` | `src/{BoundedContext}/Presentation/Web/templates/` |
-| Route | `/{context}/{action}` (kebab-case) | `/user/register` | `config/routes.yaml` |
+| Route | `#[Route]` attribute | `#[Route('/user/register', methods: ['POST'])]` | Controller class |
+
+### SAC Rules
+- Controllers MUST have exactly one public method: `__invoke()`
+- Controllers MUST use PHP 8 attributes for routing (`#[Route]`)
+- YAML route files in `config/routes/` are forbidden (except Symfony bundle configs)
 
 ### Doctrine Mapping Rules
 - **UNIQUE location**: `src/{BoundedContext}/Infrastructure/Persistence/Doctrine/{Entity}.orm.yaml`
