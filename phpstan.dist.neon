@@ -3,3 +3,7 @@ parameters:
     paths:
         - src/
         - tests/
+    
+    # SOLID, KISS, DRY enforcement through strict level
+    # Level 6 already includes many code quality checks
+    # For additional SOLID/KISS enforcement, use architecture tests (Pest Arch Testing)
