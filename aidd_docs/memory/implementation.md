@@ -41,6 +41,23 @@ The practical patterns, methodology, and examples for implementing features foll
 - Must delegate to `{UseCase}Handler` from Application layer
 - Must NOT contain business logic (Domain layer only)
 
+### Strategy Pattern
+- **Purpose**: Define a family of algorithms, encapsulate each one, and make them interchangeable
+- **Structure**: Strategy interface + ConcreteStrategy classes + Context that delegates to strategy
+- **Use When**: Replace conditional blocks (if/else, switch) with polymorphic behavior
+- **Constraint**: Strategies MUST be stateless and immutable
+
+**Implementation**:
+- Strategy interface lives in `src/{BoundedContext}/Domain/Service/Strategy/`
+- Concrete strategies implement the interface with specific algorithms
+- Context receives strategies via **Service Locator** (implements `ServiceSubscriberInterface`)
+- Client selects strategy at runtime via `$locator->get($strategyName)`
+
+**Service Locator Setup**:
+- Context implements `Symfony\Contracts\Service\ServiceSubscriberInterface`
+- Define available strategies in `getSubscribedServices()` method
+- Locator only instantiates used strategies (lazy loading)
+
 ## Implementation Methodology
 
 ### Steps to Implement a Feature in a Bounded Context
@@ -130,6 +147,8 @@ src/User/
 | Notification | `{Action}Notification` | `UserRegisteredNotification` |
 | Repository (interface) | `{Entity}Repository` | `UserRepository` |
 | Repository (implementation) | `Doctrine{Entity}Repository` | `DoctrineUserRepository` |
+| Strategy (interface) | `{Action}Strategy` | `PaymentStrategy` |
+| Strategy (implementation) | `{Action}{Variant}Strategy` | `CreditCardPaymentStrategy` |
 
 ### UseCase Organization Rules
 | Element | Convention | Example | Location |
@@ -146,6 +165,12 @@ src/User/
 - Controllers MUST have exactly one public method: `__invoke()`
 - Controllers MUST use PHP 8 attributes for routing (`#[Route]`)
 - YAML route files in `config/routes/` are forbidden (except Symfony bundle configs)
+
+### Strategy Rules
+- Strategies MUST be stateless and immutable
+- Context MUST implement `ServiceSubscriberInterface` for dynamic strategy selection
+- Context MUST receive strategies via Service Locator (not individual injections)
+- Client MUST select strategy at runtime via `$locator->get($strategyName)`
 
 ### Doctrine Mapping Rules
 - **UNIQUE location**: `src/{BoundedContext}/Infrastructure/Persistence/Doctrine/{Entity}.orm.yaml`
