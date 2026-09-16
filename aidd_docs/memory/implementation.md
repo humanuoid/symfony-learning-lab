@@ -67,8 +67,8 @@ The practical patterns, methodology, and examples for implementing features foll
 4. **Define coordination** → `Application/UseCase/{FeatureName}/{FeatureName}Handler`
 5. **Define persistence** → `Infrastructure/Persistence/{ORM}/{Entity}Repository`
 6. **Define exposure** → `Presentation/Web/{FeatureName}Controller` (HTTP) or `Presentation/Console/` (CLI)
-7. **Define side effects** → `Domain/Event` (sync) or `Application/Notification` (async)
-8. **Write tests** → Unit tests for Domain, integration tests for Application
+  7. **Define side effects** → `Domain/Event` (sync) or `Application/Notification` (async)
+  8. **Write tests** → Unit tests for Domain, integration tests for Application, functional tests for Presentation
 
 ### Example: User Registration (in `User/` context)
 ```
