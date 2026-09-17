@@ -7,6 +7,10 @@ How the project is tested: the layers, the tools, and the conventions. Where tes
 - Unit and integration tests with Pest
 - Architecture tests with Pest Arch Testing
 
+## Priority
+
+Focus testing efforts on **use cases** and **business code** (Domain and Application layers). For tests outside business logic, always ask: is it essential to write these tests?
+
 ## Types
 
 - **Unit tests**: Test individual classes or functions in isolation (Domain layer: entities, value objects, services). Use Pest's `it()` or `test()` for pure PHP logic without dependencies.
